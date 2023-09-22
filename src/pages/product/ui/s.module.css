@@ -1,0 +1,10 @@
+.layout {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+.image {
+  width: 40%;
+}
+.controls {
+  flex-grow: 1;
+}
