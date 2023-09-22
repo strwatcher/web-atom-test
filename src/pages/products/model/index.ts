@@ -1,12 +1,20 @@
-import { getAllProductsQuery } from "@/entities/product";
+import { getAllProductsQuery } from "@/shared/api/products";
 import { routes } from "@/shared/routing";
-import { sample } from "effector";
+import { RouteParamsAndQuery, chainRoute } from "atomic-router";
+import { createEvent, sample } from "effector";
 
-export const route = routes.products;
+const beforeOpen = createEvent<RouteParamsAndQuery<{}>>();
+const openOn = getAllProductsQuery.finished.success;
+const cancelOn = getAllProductsQuery.finished.failure;
 
 sample({
-  clock: route.opened,
+  clock: beforeOpen,
   target: getAllProductsQuery.start,
 });
 
-getAllProductsQuery.finished.success.watch(console.log);
+export const route = chainRoute({
+  route: routes.products,
+  beforeOpen,
+  openOn,
+  cancelOn,
+});

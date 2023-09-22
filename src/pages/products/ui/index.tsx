@@ -1,3 +1,5 @@
+import { ProductList } from "@/entities/product";
+
 export const Page = () => {
-  return <></>;
+  return <ProductList />;
 };
