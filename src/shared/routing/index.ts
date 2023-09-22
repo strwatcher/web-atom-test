@@ -1,20 +1,14 @@
-import {
-  createHistoryRouter,
-  createRoute,
-  createRouterControls,
-} from "atomic-router";
+import { createHistoryRouter, createRoute } from "atomic-router";
 import { sample } from "effector";
 import { appStarted } from "../config";
 import { createBrowserHistory } from "history";
-import { Id } from "../lib/id";
+import { ProductId } from "../api/products";
 
 export const routes = {
   products: createRoute(),
-  product: createRoute<{ id: Id }>(),
+  product: createRoute<ProductId>(),
   login: createRoute(),
 };
-
-export const controls = createRouterControls();
 
 export const router = createHistoryRouter({
   routes: [
@@ -22,8 +16,6 @@ export const router = createHistoryRouter({
     { path: "/products/:id", route: routes.product },
     { path: "/login", route: routes.login },
   ],
-
-  controls,
 });
 
 sample({
