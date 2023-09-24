@@ -12,6 +12,6 @@ export const deleteProductMutation = createJsonMutation({
     url: ({ id }) => combineUrl({ resource, other: `${id}` }),
   },
   response: {
-    contract: zodContract(ProductContract),
+    contract: zodContract(ProductContract.nullable()),
   },
 });

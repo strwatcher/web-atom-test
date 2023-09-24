@@ -8,10 +8,12 @@ export const ProductContract = z.object({
   description: z.string(),
   category: z.string(),
   image: z.string(),
-  rating: z.object({
-    rate: z.number(),
-    count: z.number(),
-  }),
+  rating: z
+    .object({
+      rate: z.number(),
+      count: z.number(),
+    })
+    .optional(),
 });
 
 export const ProductsContract = z.array(ProductContract);
@@ -29,5 +31,7 @@ export type CreateProductDto = Pick<
 >;
 
 export type UpdateProductDto = CreateProductDto;
-
+export const UpdateProductSuccessContract = ProductContract.omit({
+  rating: true,
+});
 export const resource = "products";

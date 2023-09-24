@@ -1,52 +1,54 @@
 import {
   Badge,
+  Button,
   Group,
   Image,
   Paper,
-  Rating,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import { Product, ProductId } from "@/shared/api/products";
+import { Product } from "@/shared/api/products";
 
 import s from "./s.module.css";
-import { Link } from "atomic-router-react";
 import { routes } from "@/shared/routing";
+import { Rating } from "@/shared/ui/rating";
 
 export type ProductItemProps = {
   product: Product;
+  onDelete: () => void;
 };
 
 export const ProductItem = (props: ProductItemProps) => {
   return (
     <Paper
       className={s.product}
-      component={Link<ProductId>}
-      to={routes.product}
-      params={{ id: props.product.id }}
+      onClick={() => routes.product.open({ id: props.product.id })}
     >
       <Group className={s.layout}>
         <Image className={s.image} src={props.product.image} />
         <Stack className={s.information}>
           <Title>{props.product.title}</Title>
           <Group justify="space-between">
-            <Group className={s.rating}>
-              {props.product.rating.rate}
-              <Rating
-                size="lg"
-                value={props.product.rating.rate}
-                fractions={4}
-                readOnly
-              />
-              ({props.product.rating.count})
-            </Group>
+            <Rating
+              rate={props.product.rating?.rate ?? 0}
+              count={props.product.rating?.count ?? 0}
+            />
             <Title className={s.price}>${props.product.price.toFixed(2)}</Title>
           </Group>
 
           <Badge className={s.category}>{props.product.category}</Badge>
           <Text>{props.product.description}</Text>
         </Stack>
+        <Button
+          color="red"
+          onClick={(e) => {
+            e.stopPropagation();
+            props.onDelete();
+          }}
+        >
+          Delete
+        </Button>
       </Group>
     </Paper>
   );

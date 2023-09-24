@@ -1,8 +1,8 @@
 import { createJsonMutation, declareParams } from "@farfetched/core";
 import {
-  ProductContract,
   ProductId,
   UpdateProductDto,
+  UpdateProductSuccessContract,
   resource,
 } from "./common";
 import { zodContract } from "@farfetched/zod";
@@ -16,11 +16,11 @@ type UpdateProductMutationParams = {
 export const updateProductMutation = createJsonMutation({
   params: declareParams<UpdateProductMutationParams>(),
   request: {
-    method: "DELETE",
+    method: "PUT",
     url: ({ query: { id } }) => combineUrl({ resource, other: `${id}` }),
     body: ({ body }) => body,
   },
   response: {
-    contract: zodContract(ProductContract),
+    contract: zodContract(UpdateProductSuccessContract),
   },
 });

@@ -1,5 +1,15 @@
-import { ProductList } from "@/entities/product";
+import { Button, Stack } from "@mantine/core";
+import { ProductList } from "./list";
+import { useCreateProductsModel } from "../model";
+import { CreateProductPopup } from "./create-popup";
 
 export const Page = () => {
-  return <ProductList />;
+  const { creation } = useCreateProductsModel();
+  return (
+    <Stack>
+      <Button onClick={creation.activate}>Add product</Button>
+      <ProductList />
+      <CreateProductPopup />
+    </Stack>
+  );
 };
