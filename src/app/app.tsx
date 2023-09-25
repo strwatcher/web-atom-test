@@ -13,7 +13,7 @@ export const App = () => {
     <MantineProvider theme={theme}>
       <RouterProvider router={router}>
         <Pages />
-        <LoadingOverlay visible={pending} />
+        <LoadingOverlay pos={"fixed"} visible={pending} />
       </RouterProvider>
     </MantineProvider>
   );
