@@ -9,10 +9,10 @@ import {
 import { useCreateProductsModel } from "../../model";
 import { Form } from "@/shared/ui/form";
 
-export const CreateProductPopup = () => {
+export const CreateProductModal = () => {
   const { creation, form } = useCreateProductsModel();
   return (
-    <Modal opened={creation.active} onClose={creation.deactivate}>
+    <Modal opened={creation.active} onClose={creation.deactivate} centered>
       <Form onReset={form.reset} onSubmit={form.submit}>
         <Stack>
           <TextInput label="Title" {...form.fields.title} />
@@ -20,7 +20,7 @@ export const CreateProductPopup = () => {
           <TextInput label="Category" {...form.fields.category} />
           <NumberInput label="Price" {...form.fields.price} />
           <TextInput label="Image href" {...form.fields.image} />
-          <Group /* className={s.formButtons} */>
+          <Group>
             <Button type="reset">Cancel</Button>
             <Button variant="outline" type="submit">
               Save

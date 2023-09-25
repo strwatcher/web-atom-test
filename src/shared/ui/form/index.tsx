@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export type FormProps = {
   onSubmit: () => void;
-  onReset: () => void;
+  onReset?: () => void;
   children: ReactNode;
   className?: string;
 };
@@ -16,7 +16,7 @@ export const Form = (props: FormProps) => {
       }}
       onReset={(e) => {
         e.preventDefault();
-        props.onReset();
+        props.onReset && props.onReset();
       }}
       className={props.className}
     >

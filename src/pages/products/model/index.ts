@@ -5,6 +5,7 @@ import {
   deleteProductMutation,
   getAllProductsQuery,
 } from "@/shared/api/products";
+import { chainAuth } from "@/shared/config/session";
 import { rules } from "@/shared/lib/forms/rules";
 import { routes } from "@/shared/routing";
 import { RouteParamsAndQuery, chainRoute } from "atomic-router";
@@ -13,7 +14,7 @@ import { createForm, useForm } from "effector-forms";
 import { useUnit } from "effector-react";
 import { ChangeEvent } from "react";
 
-const beforeOpen = createEvent<RouteParamsAndQuery<{}>>();
+const beforeOpen = createEvent<RouteParamsAndQuery<object>>();
 const openOn = getAllProductsQuery.finished.success;
 const cancelOn = getAllProductsQuery.finished.failure;
 
@@ -22,8 +23,13 @@ sample({
   target: getAllProductsQuery.start,
 });
 
+const authorizedRoute = chainAuth(routes.products, {
+  otherwise: routes.login.open,
+  anonymousRoute: false,
+});
+
 export const route = chainRoute({
-  route: routes.products,
+  route: authorizedRoute,
   beforeOpen,
   openOn,
   cancelOn,
@@ -42,6 +48,7 @@ const createProductForm = createForm<CreateProductDto>({
   fields: {
     title: {
       init: "",
+      rules: [rules.required()],
     },
     price: {
       init: 0,
@@ -49,9 +56,11 @@ const createProductForm = createForm<CreateProductDto>({
     },
     description: {
       init: "",
+      rules: [rules.required()],
     },
     category: {
       init: "",
+      rules: [rules.required()],
     },
     image: {
       init: "",

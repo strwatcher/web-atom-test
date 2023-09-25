@@ -8,6 +8,7 @@ import { $pending } from "@/shared/api";
 
 export const App = () => {
   const pending = useUnit($pending);
+
   return (
     <MantineProvider theme={theme}>
       <RouterProvider router={router}>

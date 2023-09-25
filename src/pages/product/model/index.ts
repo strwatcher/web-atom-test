@@ -5,6 +5,7 @@ import {
   Product,
   UpdateProductDto,
 } from "@/shared/api/products";
+import { chainAuth } from "@/shared/config/session";
 import { rules } from "@/shared/lib/forms/rules";
 import { routes } from "@/shared/routing";
 import { RouteParamsAndQuery, chainRoute } from "atomic-router";
@@ -23,8 +24,13 @@ sample({
   target: getProductQuery.start,
 });
 
+const authorizedRoute = chainAuth(routes.product, {
+  otherwise: routes.login.open,
+  anonymousRoute: false,
+});
+
 export const route = chainRoute({
-  route: routes.product,
+  route: authorizedRoute,
   beforeOpen,
   openOn,
   cancelOn,
@@ -37,6 +43,7 @@ const editForm = createForm<UpdateProductDto>({
   fields: {
     title: {
       init: "",
+      rules: [rules.required()],
     },
     price: {
       init: 0,
@@ -44,9 +51,11 @@ const editForm = createForm<UpdateProductDto>({
     },
     description: {
       init: "",
+      rules: [rules.required()],
     },
     category: {
       init: "",
+      rules: [rules.required()],
     },
     image: {
       init: "",

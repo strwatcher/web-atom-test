@@ -2,6 +2,10 @@ body {
   padding: rem(20px);
 }
 
+#root {
+  height: 100%;
+}
+
 a,
 a:hover,
 a:visited,
